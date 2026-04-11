@@ -61,7 +61,6 @@ BDEPEND="
 	app-text/scdoc
 	>=kde-frameworks/extra-cmake-modules-6.0.0:*
 	virtual/pkgconfig
-	dev-util/vulkan-headers
 "
 
 src_prepare() {
