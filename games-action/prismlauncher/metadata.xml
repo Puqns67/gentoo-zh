@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>me@puqns67.icu</email>
+    <name>Puqns67</name>
+  </maintainer>
+  <upstream>
+    <bugs-to>https://github.com/PrismLauncher/PrismLauncher/issues</bugs-to>
+    <doc>https://prismlauncher.org/wiki/</doc>
+    <remote-id type="github">PrismLauncher/PrismLauncher</remote-id>
+  </upstream>
+  <longdescription>Prism Launcher is a multi-instance Minecraft launcher focused on user freedom, redistributability, and simplicity.</longdescription>
+</pkgmetadata>
