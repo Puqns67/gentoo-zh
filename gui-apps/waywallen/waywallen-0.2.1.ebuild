@@ -85,6 +85,10 @@ export LIBSQLITE3_SYS_USE_PKG_CONFIG=1
 src_prepare() {
 	default_src_prepare
 
+	pushd "${WORKDIR}/rstd-${RSTD_COMMIT}" || die
+	eapply "${FILESDIR}/rstd.patch"
+	popd || die
+
 	pushd "${WORKDIR}/wavsen-${WAVSEN_COMMIT}" || die
 	eapply "${FILESDIR}/${PN}-0.2.1-wavsen-optional-vaapi.patch"
 	popd || die

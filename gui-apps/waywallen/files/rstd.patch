@@ -1,0 +1,13 @@
+diff --git a/src/cppstd/cppstd.cppm b/src/cppstd/cppstd.cppm
+index ceb0876..08e3a48 100644
+--- a/src/cppstd/cppstd.cppm
++++ b/src/cppstd/cppstd.cppm
+@@ -486,7 +486,7 @@ export using std::allocator;
+ export using std::allocator_traits;
+ export using std::default_delete;
+ export using std::enable_shared_from_this;
+-export using std::make_shared;
++//export using std::make_shared;
+ export using std::shared_ptr;
+ export using std::unique_ptr;
+ export using std::weak_ptr;
