@@ -16,9 +16,9 @@ DESCRIPTION="A dynamic wallpaper solution for Linux desktops"
 HOMEPAGE="https://github.com/waywallen/waywallen"
 
 RSTD_COMMIT="629bda81eb98856ca023f0f87f57dde8d22b4823"
-WAVSEN_COMMIT="c714a4fc59a689a80b3b537ee8ef501c363a841f"
+WAVSEN_COMMIT="107f2aeab439276c5b7271658b7df1f4ab0ed028"
 NCREQUEST_COMMIT="404868aa2aa4481e262f25d8f7d053f42b61b7b8"
-QEXTRA_COMMIT="26e4b4134a05d35676f02f8b0e82a6130d877695"
+QEXTRA_COMMIT="f20b70eef08eef573be03954db3a455bbefe2637"
 
 SRC_URI="
 	https://github.com/waywallen/waywallen/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
