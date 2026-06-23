@@ -145,7 +145,7 @@ jobs:
 
     - name: emerge --onlydeps packages
       run: |
-        emerge --quiet --autounmask=y --autounmask-write=y --autounmask-continue=y --onlydeps ${{ matrix.package }}
+        emerge --quiet --onlydeps --jobs=2 --autounmask=y --autounmask-write=y --autounmask-continue=y ${{ matrix.package }}
         rm -rf /var/log/portage/elog/*
 
     - name: emerge packages
