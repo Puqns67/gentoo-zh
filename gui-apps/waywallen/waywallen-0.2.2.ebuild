@@ -98,9 +98,10 @@ src_configure() {
 		CC="clang-${LLVM_SLOT}" \
 		CXX="clang++-${LLVM_SLOT}"
 
-	replace-flags -O* -O0
+	# Fix link error when use -O1 ~ -O3
+	append-cxxflags -D_FORTIFY_SOURCE=0
 
-	if ! (tc-ld-is-lld || tc-ld-is-mold); then
+	if ! tc-ld-is-lld && ! tc-ld-is-mold; then
 		append-ldflags -fuse-ld=lld
 	fi
 
