@@ -1,29 +1,41 @@
 diff --git a/src/video/video_decoder.cpp b/src/video/video_decoder.cpp
-index 5370f3b..b47b418 100644
+index 5370f3b..73d8dca 100644
 --- a/src/video/video_decoder.cpp
 +++ b/src/video/video_decoder.cpp
-@@ -195,7 +195,7 @@ AVBufferRef* make_shared_vulkan_hwdevice(const Producer& vk, Error* err) {
+@@ -195,14 +195,14 @@ AVBufferRef* make_shared_vulkan_hwdevice(const Producer& vk, Error* err) {
  
      const auto& qfs = vk.queue_families();
      vctx->nb_qf = 0;
 -    for (const auto& q : qfs) {
-+    for (const auto& q = qfs.begin(); q != qfs.end(); ++q)
++    for (auto q = qfs.begin(); q != qfs.end(); ++q)
          if (vctx->nb_qf >= static_cast<int>(sizeof(vctx->qf) / sizeof(vctx->qf[0])))
              break;
          AVVulkanDeviceQueueFamily entry {};
+-        entry.idx        = static_cast<int>(q.index);
++        entry.idx        = static_cast<int>(q->index);
+         entry.num        = 1;
+-        entry.flags      = static_cast<VkQueueFlagBits>(q.flags);
+-        entry.video_caps = static_cast<VkVideoCodecOperationFlagBitsKHR>(q.video_caps);
++        entry.flags      = static_cast<VkQueueFlagBits>(q->flags);
++        entry.video_caps = static_cast<VkVideoCodecOperationFlagBitsKHR>(q->video_caps);
+         vctx->qf[vctx->nb_qf++] = entry;
+     }
+ 
 diff --git a/src/video/vk_device.cpp b/src/video/vk_device.cpp
-index dc339b4..272ecc9 100644
+index dc339b4..f409a68 100644
 --- a/src/video/vk_device.cpp
 +++ b/src/video/vk_device.cpp
-@@ -37,7 +37,7 @@ bool device_has_ext(VkPhysicalDevice phys, const char* name) {
+@@ -37,8 +37,8 @@ bool device_has_ext(VkPhysicalDevice phys, const char* name) {
      vkEnumerateDeviceExtensionProperties(phys, nullptr, &n, nullptr);
      std::vector<VkExtensionProperties> props(n);
      vkEnumerateDeviceExtensionProperties(phys, nullptr, &n, props.data());
 -    for (auto& p : props) {
-+    for (auto& p = props.begin(); p != props.end(); ++p) {
-         if (std::strcmp(p.extensionName, name) == 0) return true;
+-        if (std::strcmp(p.extensionName, name) == 0) return true;
++    for (auto p = props.begin(); p != props.end(); ++p) {
++        if (std::strcmp(p->extensionName, name) == 0) return true;
      }
      return false;
+ }
 @@ -186,7 +186,7 @@ Producer::build_(uint32_t width, uint32_t height,
                                    "vkGetPhysicalDeviceProperties2"));
  
@@ -33,12 +45,16 @@ index dc339b4..272ecc9 100644
          bool ok = true;
          for (const char* e : req_dev_exts) {
              if (!device_has_ext(pd, e)) { ok = false; break; }
-@@ -260,7 +260,7 @@ Producer::build_(uint32_t width, uint32_t height,
+@@ -260,10 +260,10 @@ Producer::build_(uint32_t width, uint32_t height,
      std::vector<float>                   prios(self->queue_families_.size(), 1.0f);
      std::vector<VkDeviceQueueCreateInfo> qcis;
      qcis.reserve(self->queue_families_.size());
 -    for (const auto& q : self->queue_families_) {
-+    for (const auto& q = self->queue_families_.begin(); q != self->queue_families_.end(); ++ q) {
++    for (auto q = self->queue_families_.begin(); q != self->queue_families_.end(); ++q) {
          VkDeviceQueueCreateInfo qci {};
          qci.sType            = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-         qci.queueFamilyIndex = q.index;
+-        qci.queueFamilyIndex = q.index;
++        qci.queueFamilyIndex = q->index;
+         qci.queueCount       = 1;
+         qci.pQueuePriorities = &prios[0];
+         qcis.push_back(qci);
