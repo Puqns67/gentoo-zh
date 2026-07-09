@@ -1214,7 +1214,7 @@ github_account = "peeweep"
 ["net-dns/ddns-go"]
 source = "github"
 github = "jeessy2/ddns-go"
-use_latest_tag = true
+use_latest_release = true
 prefix = "v"
 github_account = "Puqns67"
 
