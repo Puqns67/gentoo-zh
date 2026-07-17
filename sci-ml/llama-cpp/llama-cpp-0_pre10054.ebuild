@@ -13,8 +13,9 @@ DESCRIPTION="LLM inference in C/C++"
 HOMEPAGE="https://github.com/ggml-org/llama.cpp"
 
 if [[ ${PV} == *9999* ]]; then
-	inherit git-r3
 	EGIT_REPO_URI="https://github.com/ggml-org/llama.cpp.git"
+	EGIT_MIN_CLONE_TYPE="single"
+	inherit git-r3
 else
 	MY_PV="b${PV#0_pre}"
 	SRC_URI="
@@ -117,10 +118,11 @@ src_unpack() {
 			einfo Downloading webui dist from huggingface bucket...
 			wget -qO - "https://huggingface.co/buckets/ggml-org/llama-ui/resolve/latest/dist.tar.gz" \
 				| tar -xzC "${S}/tools/ui/dist"
+			echo "{\"version\":\"b$(git -C "${S}" rev-list --count HEAD)\"}" > "${S}/tools/ui/dist/build.json"
 		else
 			ln -s "${WORKDIR}/llama-${MY_PV}" "${S}/tools/ui/dist" || die
+			echo "{\"version\":\"${MY_PV}\"}" > "${S}/tools/ui/dist/build.json"
 		fi
-		echo "{\"version\":\"${MY_PV}\"}" > "${S}/tools/ui/dist/build.json"
 	fi
 }
 
