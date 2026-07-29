@@ -161,7 +161,7 @@ jobs:
     - name: setup repo
       run: |
         mkdir -p /etc/portage/repos.conf
-        cat > /etc/portage/repos.conf/repo.conf << EOF
+        cat > /etc/portage/repos.conf/ci.conf << EOF
         [$(cat profiles/repo_name)]
         location = $(realpath .)
         priority = 0
@@ -170,20 +170,34 @@ jobs:
     - name: setup portage config
       run: |
         cat >> /etc/portage/make.conf << EOF
-        FEATURES="\${FEATURES} getbinpkg"
         MAKEOPTS="\${MAKEOPTS} -j$(nproc)"
         PORTAGE_ELOG_CLASSES="qa warn error"
         PORTAGE_ELOG_SYSTEM="save"
+        FETCHCOMMAND="\${FETCHCOMMAND} --no-verbose"
+        RESUMECOMMAND="\${RESUMECOMMAND} --no-verbose"
         EOF
+
+        cat > /etc/portage/binrepos.conf/ci.conf << EOF
+        [$(cat profiles/repo_name)-binhost]
+        sync-uri = https://distfiles.gentoozh.org/binpkgs/x86-64
+        priority = 2
+        EOF
+
         mkdir -p /etc/portage/package.use
-        cat >> /etc/portage/package.use/ci-binhost << EOF
+        cat > /etc/portage/package.use/ci << EOF
         dev-qt/qtwebengine bindist
         net-libs/webkit-gtk keyring
         EOF
+
         cat /etc/portage/make.conf
 
     - name: setup keyring for binpkgs
-      run: getuto
+      run: |
+        getuto
+        export GNUPGHOME=/etc/portage/gnupg
+        wget -qO - https://distfiles.gentoozh.org/gentoo-zh-binhost.asc | gpg --import
+        gpg --batch --yes --pinentry-mode loopback --passphrase-file "${GNUPGHOME}/pass" --lsign-key 6A0726AF1476A2F382C6AC6638A0234EC16AD42E
+        gpg --batch --check-trustdb
 
     - name: setup distfiles permissions
       run: |
@@ -192,7 +206,7 @@ jobs:
 
     - name: emerge --onlydeps packages
       run: |
-        emerge --quiet --autounmask=y --autounmask-write=y --autounmask-continue=y --onlydeps ${{ matrix.target.package }}
+        FEATURES="getbinpkg" emerge --onlydeps --jobs 2 --quiet --verbose --autounmask=y --autounmask-write=y --autounmask-continue=y ${{ matrix.target.package }}
         rm -rf /var/log/portage/elog/*
 
     - name: emerge packages
