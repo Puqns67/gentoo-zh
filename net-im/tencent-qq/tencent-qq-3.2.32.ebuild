@@ -21,7 +21,7 @@ SRC_URI="
 
 S="${WORKDIR}"
 
-LICENSE="Tencent"
+LICENSE="Tencent-QQ"
 SLOT="0"
 KEYWORDS="-* ~amd64 ~arm64"
 
