@@ -5,32 +5,20 @@ EAPI=8
 
 inherit desktop xdg
 
-_PN="${PN%-bin}"
-
 DESCRIPTION="A free-to-win rhythm game. Rhythm is just a click away!"
 HOMEPAGE="https://osu.ppy.sh/ https://github.com/ppy/osu"
+SRC_URI="https://github.com/ppy/osu/releases/download/${PV}-tachyon/osu.AppImage -> osu-lazer-${PV}.AppImage"
 
-SRC_URI="
-	https://github.com/ppy/osu/releases/download/${PV}-tachyon/osu.AppImage -> ${_PN}-tachyon-${PV}.AppImage
-	https://github.com/ppy/osu/raw/refs/heads/master/LICENCE -> ${_PN}-LICENCE
-	https://github.com/ppy/osu-resources/raw/refs/heads/master/LICENCE.md -> ${_PN}-resources-LICENCE.md
-"
-
-S="${WORKDIR}"
+S="${WORKDIR}/squashfs-root"
 
 LICENSE="MIT CC-BY-NC-4.0"
 SLOT="0/tachyon"
 
 IUSE="complete-icon gamemode pipewire sdl2 system-ffmpeg +system-sdl"
+RESTRICT="bindist mirror"
 
-RESTRICT="mirror"
-
-DEPEND="
-	!games-arcade/osu-lazer
-	x11-themes/hicolor-icon-theme
-"
 RDEPEND="
-	${DEPEND}
+	!games-arcade/osu-lazer
 	dev-util/lttng-ust:0/2.12
 	gamemode? ( games-util/gamemode )
 	pipewire? ( media-video/pipewire[pipewire-alsa] )
@@ -42,10 +30,10 @@ RDEPEND="
 "
 BDEPEND="complete-icon? ( media-gfx/imagemagick )"
 
-QA_PREBUILT="/usr/lib/osu-lazer/*"
+QA_PREBUILT="opt/osu-lazer/*"
 
 src_unpack() {
-	cp "${DISTDIR}/${_PN}-tachyon-${PV}.AppImage" "${WORKDIR}/appimage"
+	cp "${DISTDIR}/osu-lazer-${PV}.AppImage" "${WORKDIR}/appimage"
 	chmod +x "${WORKDIR}/appimage"
 	"${WORKDIR}/appimage" --appimage-extract
 }
@@ -53,7 +41,7 @@ src_unpack() {
 src_prepare() {
 	default
 
-	pushd squashfs-root/usr/bin || die
+	pushd usr/bin || die
 	# Remove pdb files
 	rm -fv *.pdb
 
@@ -72,19 +60,19 @@ src_prepare() {
 	mkdir -v icons
 	pushd icons
 	if use complete-icon; then
-		magick -verbose "${S}/squashfs-root/usr/bin/lazer.ico" osu.png
-		magick -verbose "${S}/squashfs-root/usr/bin/beatmap.ico" beatmap.png
+		magick -verbose "${S}/usr/bin/lazer.ico" osu.png
+		magick -verbose "${S}/usr/bin/beatmap.ico" beatmap.png
 
 		eval $(magick identify -format "mv -v %f osu-%G;" osu*.png)
 		eval $(magick identify -format "mv -v %f beatmap-%G;" beatmap*.png)
 	fi
 
-	for icon in "${S}"/squashfs-root/usr/share/icons/hicolor/*/apps/osu.png; do
+	for icon in "${S}"/usr/share/icons/hicolor/*/apps/osu.png; do
 		cp -v "${icon}" "osu-$(echo "${icon}" | sed 's/^.*\/\([0-9]\{2,4\}x[0-9]\{2,4\}\)\/.*$/\1/g')"
 	done
 	popd
 
-	cat >"${_PN}" <<EOF
+	cat >osu-lazer <<EOF
 #!/usr/bin/bash
 
 export OSU_EXTERNAL_UPDATE_PROVIDER=true
@@ -92,25 +80,26 @@ export OSU_SDL3="\${OSU_SDL3:=$(usex sdl2 false true)}"
 $(use gamemode && echo "export LD_PRELOAD=\"/usr/lib64/libgamemodeauto.so\${LD_PRELOAD:+:\$LD_PRELOAD}\"")
 $(use system-ffmpeg && echo "export LD_LIBRARY_PATH=\"/usr/lib/ffmpeg4/lib64\${LD_LIBRARY_PATH:+:\$LD_LIBRARY_PATH}\"")
 
-exec /usr/lib/osu-lazer/osu! "\$@"
+exec /opt/osu-lazer/osu! "\$@"
 EOF
 }
 
 src_install() {
 	# Install game files
-	insinto "/usr/lib/${_PN}"
-	doins -r squashfs-root/usr/bin/*
-	fperms +x "/usr/lib/${_PN}/osu!"
+	insinto /opt/osu-lazer
+	doins -r usr/bin/*
+	fperms +x /opt/osu-lazer/osu!
 
 	# Install wrapper script
-	dobin "${_PN}"
+	exeinto /opt/bin
+	doexe osu-lazer
 
 	# Install desktop file
-	domenu "${FILESDIR}/${_PN}.desktop"
+	domenu "${FILESDIR}/osu-lazer.desktop"
 
 	# Install mime file
 	insinto /usr/share/mime/packages
-	doins "${FILESDIR}/${_PN}.xml"
+	doins "${FILESDIR}/osu-lazer.xml"
 
 	# Install icons
 	pushd icons
@@ -128,9 +117,4 @@ src_install() {
 		esac
 	done
 	popd
-
-	# Install license
-	insinto "/usr/share/licenses/${_PN}"
-	newins "${DISTDIR}/${_PN}-LICENCE" "${_PN}-LICENCE"
-	newins "${DISTDIR}/${_PN}-resources-LICENCE.md" "${_PN}-resources-LICENCE.md"
 }
