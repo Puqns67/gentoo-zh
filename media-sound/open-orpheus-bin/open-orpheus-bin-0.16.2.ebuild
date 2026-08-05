@@ -47,9 +47,9 @@ QA_PREBUILT="opt/open-orpheus/*"
 src_install() {
 	insinto /opt/open-orpheus
 	doins -r usr/lib/open-orpheus/*
+	dosym ../open-orpheus/open-orpheus /opt/bin/open-orpheus
 	fperms +x /opt/open-orpheus/{open-orpheus,chrome-sandbox,chrome_crashpad_handler}
 	fperms u+s /opt/open-orpheus/chrome-sandbox
-	dosym ../../opt/open-orpheus/open-orpheus /usr/bin/open-orpheus
 	domenu usr/share/applications/open-orpheus.desktop
 	doicon usr/share/pixmaps/open-orpheus.png
 }
