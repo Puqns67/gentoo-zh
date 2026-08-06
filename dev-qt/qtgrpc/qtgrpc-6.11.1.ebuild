@@ -8,7 +8,7 @@ inherit qt6-build
 DESCRIPTION="Qt GRPC and Protobuf generator and bindings"
 
 if [[ ${QT6_BUILD_TYPE} == release ]]; then
-	KEYWORDS="~amd64"
+	KEYWORDS="~amd64 ~arm64"
 fi
 
 RESTRICT="bindist"
