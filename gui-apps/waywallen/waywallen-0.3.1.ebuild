@@ -10,7 +10,7 @@ declare -A GIT_CRATES=(
 	[mlua-extra]="https://github.com/hypengw/mlua-extra;df1d282170dd1718b8aeff405638c18cedd435ca"
 )
 
-inherit toolchain-funcs flag-o-matic llvm-r2 cargo cmake xdg-utils
+inherit toolchain-funcs flag-o-matic llvm-r2 cargo cmake xdg
 
 DESCRIPTION="A dynamic wallpaper solution for Linux desktops"
 HOMEPAGE="https://github.com/waywallen/waywallen"
@@ -45,10 +45,10 @@ IUSE="+ui pipewire vaapi +wallhaven"
 
 RDEPEND="
 	media-plugins/waywallen-display
+	app-arch/zstd
 	dev-db/sqlite
 	dev-libs/glib
 	dev-libs/icu
-	dev-libs/protobuf
 	dev-util/glslang
 	media-libs/mesa
 	media-libs/vulkan-loader
@@ -68,9 +68,6 @@ RDEPEND="
 "
 DEPEND="
 	${RDEPEND}
-	dev-cpp/asio
-	dev-cpp/nlohmann_json
-	dev-libs/pegtl
 	dev-util/vulkan-headers
 "
 BDEPEND="
@@ -87,9 +84,14 @@ PATCHES=(
 )
 
 export LIBSQLITE3_SYS_USE_PKG_CONFIG=1
+export ZSTD_SYS_USE_PKG_CONFIG=1
 
 src_prepare() {
 	default_src_prepare
+
+	pushd "${WORKDIR}/rstd-${RSTD_COMMIT}" || die
+	eapply "${FILESDIR}/${PN}-0.3.1-rstd-fixes.patch"
+	popd || die
 
 	pushd "${WORKDIR}/wavsen-${WAVSEN_COMMIT}" || die
 	eapply "${FILESDIR}/${PN}-0.2.2-wavsen-optional-vaapi.patch"
@@ -104,6 +106,7 @@ src_configure() {
 		CXX="clang++-${LLVM_SLOT}"
 
 	# Fix link error when use -O1 ~ -O3
+	# https://github.com/llvm/llvm-project/issues/121709
 	append-cxxflags -D_FORTIFY_SOURCE=0
 
 	if ! tc-ld-is-lld && ! tc-ld-is-mold; then
@@ -129,14 +132,4 @@ src_configure() {
 	)
 
 	cmake_src_configure
-}
-
-pkg_postinst() {
-	xdg_desktop_database_update
-	xdg_icon_cache_update
-}
-
-pkg_postrm() {
-	xdg_desktop_database_update
-	xdg_icon_cache_update
 }
