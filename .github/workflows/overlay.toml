@@ -800,6 +800,12 @@ prefix = "v"
 # TODO: upstream no tags
 #["dev-cpp/cppcoro"]
 
+["dev-build/lito"]
+source = "github"
+github = "litocpp/lito"
+use_latest_tag = true
+prefix = "v"
+
 ["dev-cpp/date"]
 source = "github"
 github = "HowardHinnant/date"
