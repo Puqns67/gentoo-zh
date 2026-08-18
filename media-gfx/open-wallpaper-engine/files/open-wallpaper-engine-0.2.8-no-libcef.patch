@@ -1,0 +1,33 @@
+diff --git a/lito.toml b/lito.toml
+index 8a857da..96eea3a 100644
+--- a/lito.toml
++++ b/lito.toml
+@@ -125,13 +125,5 @@ cache = { BUILD_TESTING = false, EIGEN_BUILD_TESTING = false, EIGEN_BUILD_BLAS =
+ [workspace.external-dependencies.cmake.glslang]
+ package = "glslang"
+ 
+-[workspace.external-sources.cef]
+-path = "CEF_PATH"
+-
+-[workspace.external-dependencies.cmake.cef]
+-package = "CEF"
+-source = "cef"
+-adapter = "src/Web/cmake/CEF.cmake"
+-
+ [workspace.external-dependencies.cmake.waywallen-bridge]
+ package = "waywallen-bridge"
+diff --git a/src/Web/lito.toml b/src/Web/lito.toml
+index e6be559..b4e427f 100644
+--- a/src/Web/lito.toml
++++ b/src/Web/lito.toml
+@@ -40,10 +40,3 @@ visibility = "public"
+ [dependencies.rstd-cppstd]
+ workspace = true
+ visibility = "public"
+-
+-[external-dependencies.cmake.cef]
+-workspace = true
+-targets = [
+-  { name = "libcef_lib", visibility = "public" },
+-  { name = "libcef_dll_wrapper", visibility = "public" },
+-]

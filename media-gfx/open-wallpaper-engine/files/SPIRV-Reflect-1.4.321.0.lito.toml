@@ -1,0 +1,12 @@
+[package]
+name = "spirv-reflect"
+version = "1.4.321"
+
+[lib]
+name = "spirv-reflect"
+module = "spirv.reflect"
+archive = "spirv_reflect"
+sources = ["spirv_reflect.cpp"]
+
+[usage]
+public-include-directories = ["."]
