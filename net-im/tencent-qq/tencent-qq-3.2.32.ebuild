@@ -43,7 +43,7 @@ RDEPEND="
 	media-libs/libpulse
 	media-libs/mesa
 	media-libs/openslide
-	net-print/cups
+	net-print/cups[-openssl]
 	sys-apps/keyutils
 	system-fdk-aac? ( media-libs/fdk-aac )
 	system-libssh2? ( net-libs/libssh2 )
