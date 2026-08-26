@@ -1,0 +1,48 @@
+diff --git a/lito.toml b/lito.toml
+index a196119..0d2ba46 100644
+--- a/lito.toml
++++ b/lito.toml
+@@ -85,13 +85,6 @@ version = ">= 5"
+ [workspace.external-sources.waywallen-control]
+ path = "proto"
+ 
+-[workspace.external-sources.waywallen-rust]
+-path = "."
+-
+-[workspace.external-dependencies.cargo.waywallen-daemon]
+-source = "waywallen-rust"
+-package = "waywallen"
+-
+ [workspace.external-sources.qml-material]
+ git = "https://github.com/hypengw/QmlMaterial.git"
+ 
+diff --git a/ui/install.lua b/ui/install.lua
+index ab7a88e..596bc3d 100644
+--- a/ui/install.lua
++++ b/ui/install.lua
+@@ -7,13 +7,6 @@ lito.install({
+       destination = "bin/waywallen-ui",
+     },
+   },
+-  external_assets = {
+-    {
+-      dependency = "waywallen-daemon",
+-      set = "waywallen",
+-      destination = "bin",
+-    },
+-  },
+   files = {
+     {
+       source = "assets/waywallen-ui.svg",
+diff --git a/ui/lito.toml b/ui/lito.toml
+index f366c0d..87ea10f 100644
+--- a/ui/lito.toml
++++ b/ui/lito.toml
+@@ -158,7 +158,3 @@ workspace = true
+ targets = [
+   { name = "qml_material::waywallen", visibility = "private" },
+ ]
+-
+-[external-dependencies.cargo.waywallen-daemon]
+-workspace = true
+-usage = "runtime"

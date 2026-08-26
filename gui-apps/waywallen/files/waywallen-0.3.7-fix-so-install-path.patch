@@ -1,0 +1,13 @@
+diff --git a/bridge/install.lua b/bridge/install.lua
+index 98cee6e..182d28a 100644
+--- a/bridge/install.lua
++++ b/bridge/install.lua
+@@ -2,7 +2,7 @@ lito.install({
+   artifacts = {
+     {
+       target = { kind = "lib", name = "waywallen-bridge" },
+-      destination = "lib/libwaywallen-bridge.so",
++      destination = "lib64/libwaywallen-bridge.so",
+     },
+   },
+   files = {

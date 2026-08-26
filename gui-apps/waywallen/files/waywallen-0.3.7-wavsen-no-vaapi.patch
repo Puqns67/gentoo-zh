@@ -1,0 +1,29 @@
+diff --git a/lito.toml b/lito.toml
+index 43fc3f4..bfc68eb 100644
+--- a/lito.toml
++++ b/lito.toml
+@@ -7,9 +7,6 @@ name = "wavsen"
+ module = "wavsen"
+ archive = "wavsen"
+ 
+-[usage]
+-public-definitions = ["WAVSEN_HAS_VAAPI=1"]
+-
+ [dependencies.rstd-core]
+ git = "https://github.com/litocpp/rstd.git"
+ visibility = "public"
+@@ -59,14 +56,6 @@ module = "libswresample"
+ version = ">= 3"
+ visibility = "public"
+ 
+-[external-dependencies.pkg-config.libva]
+-module = "libva"
+-visibility = "public"
+-
+-[external-dependencies.pkg-config.libva-drm]
+-module = "libva-drm"
+-visibility = "public"
+-
+ [external-dependencies.pkg-config.libpulse]
+ module = "libpulse"
+ version = ">= 14.0"

@@ -1,0 +1,71 @@
+diff --git a/lito.toml b/lito.toml
+index ca382a6..d033c83 100644
+--- a/lito.toml
++++ b/lito.toml
+@@ -8,14 +8,12 @@ members = [
+   "plugins/org.waywallen.wallhaven",
+   "tools/i18n",
+   "tools/i18n/po",
+-  "ui",
+ ]
+ default-members = [
+   "plugins/org.waywallen.image",
+   "plugins/org.waywallen.video",
+   "plugins/org.waywallen.wallhaven",
+   "tools/i18n",
+-  "ui",
+ ]
+ 
+ [workspace.package]
+@@ -54,15 +52,6 @@ git = "https://github.com/litocpp/vvk.git"
+ [workspace.dependencies.wavsen]
+ git = "https://github.com/hypengw/wavsen.git"
+ 
+-[workspace.dependencies.ncrequest]
+-git = "https://github.com/hypengw/ncrequest.git"
+-
+-[workspace.dependencies.qextra]
+-git = "https://github.com/hypengw/QExtra.git"
+-
+-[workspace.dependencies.lito-qt]
+-builtin = "qt"
+-
+ [workspace.external-dependencies.pkg-config.gbm]
+ module = "gbm"
+ 
+@@ -81,35 +70,3 @@ version = ">= 56"
+ [workspace.external-dependencies.pkg-config.libswscale]
+ module = "libswscale"
+ version = ">= 5"
+-
+-[workspace.external-sources.waywallen-control]
+-path = "proto"
+-
+-[workspace.external-dependencies.cmake.qml-material]
+-package = "qml_material"
+-adapter = "ui/cmake/QmlMaterial.cmake"
+-
+-[workspace.external-dependencies.cmake.qt6]
+-package = "Qt6"
+-components = [
+-  "Core",
+-  "DBus",
+-  "LinguistTools",
+-  "Protobuf",
+-  "ProtobufQuick",
+-  "ProtobufWellKnownTypes",
+-  "Quick",
+-  "QuickControls2",
+-  "QuickPrivate",
+-  "WebSockets",
+-]
+-host-tools = [
+-  { name = "lrelease", target = "Qt6::lrelease" },
+-  { name = "moc", target = "Qt6::moc" },
+-  { name = "protoc", target = "WrapProtoc::WrapProtoc" },
+-  { name = "qmlcachegen", target = "Qt6::qmlcachegen" },
+-  { name = "qmlimportscanner", target = "Qt6::qmlimportscanner" },
+-  { name = "qmltyperegistrar", target = "Qt6::qmltyperegistrar" },
+-  { name = "qtprotobufgen", target = "Qt6::qtprotobufgen" },
+-  { name = "rcc", target = "Qt6::rcc" },
+-]

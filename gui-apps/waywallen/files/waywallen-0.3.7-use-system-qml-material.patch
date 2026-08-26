@@ -1,0 +1,19 @@
+diff --git a/lito.toml b/lito.toml
+index 0d2ba46..ca382a6 100644
+--- a/lito.toml
++++ b/lito.toml
+@@ -85,14 +85,9 @@ version = ">= 5"
+ [workspace.external-sources.waywallen-control]
+ path = "proto"
+ 
+-[workspace.external-sources.qml-material]
+-git = "https://github.com/hypengw/QmlMaterial.git"
+-
+ [workspace.external-dependencies.cmake.qml-material]
+ package = "qml_material"
+-source = "qml-material"
+ adapter = "ui/cmake/QmlMaterial.cmake"
+-cache = { QML_MATERIAL_BUILD_TYPE = "STATIC", QM_BUILD_EXAMPLE = false, QM_BUILD_TESTS = false }
+ 
+ [workspace.external-dependencies.cmake.qt6]
+ package = "Qt6"
