@@ -5,6 +5,10 @@
 		<email>zakk@gentoozh.org</email>
 		<name>Zakk</name>
 	</maintainer>
+	<maintainer type="person">
+		<email>me@puqns67.icu</email>
+		<name>Puqns67</name>
+	</maintainer>
 	<longdescription lang="en">
 		Chromium with Google integration removed and privacy-affecting
 		defaults changed, packaged from the portable build the upstream
