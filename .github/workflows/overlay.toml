@@ -1475,13 +1475,6 @@ prefix = "v"
 use_latest_release = true
 github_account = "Puqns67"
 
-["gui-apps/waywallen"]
-source = "github"
-github = "waywallen/waywallen"
-prefix = "v"
-use_latest_release = true
-github_account = "Puqns67"
-
 ["kde-misc/plasma-applet-netspeed-widget"]
 source = "github"
 github = "dfaust/plasma-applet-netspeed-widget"
@@ -1684,13 +1677,6 @@ use_latest_release = true
 prefix = "v"
 github_account = ["vowstar", "gouwazi"]
 
-["media-gfx/open-wallpaper-engine"]
-source = "github"
-github = "waywallen/open-wallpaper-engine"
-use_latest_release = true
-prefix = "v"
-github_account = "Puqns67"
-
 # TODO: very old package
 #["media-gfx/scangearmp"]
 
@@ -1743,13 +1729,6 @@ github = "waylyrics/waylyrics"
 prefix = "v"
 use_latest_release = true
 github_account = "liuyujielol"
-
-["media-plugins/waywallen-display"]
-source = "github"
-github = "waywallen/waywallen-display"
-prefix = "v"
-use_latest_release = true
-github_account = "Puqns67"
 
 # vendor download, no published version index
 #["media-sound/cider"]

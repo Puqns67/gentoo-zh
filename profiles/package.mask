@@ -1,3 +1,16 @@
+# Copyright 1999-2026 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+# Puqns67 <me@puqns67.icu> (2026-08-27)
+# Waywallen undergoes frequent changes upstream, and building it
+# on Gentoo is very difficult, so I am no longer maintaining it.
+# Removal on 2026-09-27.
+dev-qt/qtgrpc
+dev-libs/qml-material
+media-plugins/waywallen-display
+gui-apps/waywallen
+media-gfx/open-wallpaper-engine
+
 # Zakk <zakk@gentoozh.org> (2026-08-12)
 # This legacy release is no longer updated. arm64 and loong users should use
 # app-office/wps-office365-edu, which supports offline use.
