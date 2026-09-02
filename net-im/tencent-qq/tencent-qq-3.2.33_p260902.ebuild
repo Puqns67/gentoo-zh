@@ -5,10 +5,12 @@ EAPI=8
 
 inherit unpacker xdg
 
-BUILD="52194"
+BUILD="52892"
 
 qq_src_uri() {
-	echo "${1}? ( https://qqdl.gtimg.cn/qqfile/QQNT/9.9.33/release/3f89efc5/QQ_${PV/p/}_${2:-$1}_01.deb -> ${P}_${1}.deb )"
+	printf "${1}? ( https://dlqq.akkariin.moe/"
+	printf "https://qqdl.gtimg.cn/qqfile/QQNTV2/9.9.35/release/1763096b/QQ_${PV/p/}_${2:-$1}_01.deb"
+	printf " -> ${P}_${1}.deb )"
 }
 
 DESCRIPTION="The new version of the official linux-qq"
