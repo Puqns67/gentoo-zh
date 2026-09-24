@@ -57,7 +57,6 @@ exec bwrap \
   --new-session \
   --cap-drop ALL \
   --unshare-user-try \
-  --unshare-ipc \
   --unshare-pid \
   --unshare-cgroup-try \
   --dev-bind /dev /dev \
