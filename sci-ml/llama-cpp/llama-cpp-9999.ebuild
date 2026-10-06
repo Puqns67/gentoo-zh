@@ -17,7 +17,7 @@ if [[ ${PV} == *9999* ]]; then
 	EGIT_MIN_CLONE_TYPE="single"
 	inherit git-r3
 else
-	BUILD="b10621"
+	BUILD="b11429"
 	SRC_URI="
 		https://github.com/ggml-org/llama.cpp/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
 		webui? (
@@ -70,6 +70,7 @@ REQUIRED_USE="
 "
 
 CDEPEND="
+	!sci-ml/ggml
 	dev-libs/openssl
 	openmp? ( llvm-runtimes/openmp:= )
 	openblas? ( sci-libs/openblas )
