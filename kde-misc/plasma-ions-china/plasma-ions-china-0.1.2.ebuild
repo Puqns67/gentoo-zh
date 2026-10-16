@@ -12,7 +12,11 @@ if [[ ${PV} == *9999* ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/arenekosreal/plasma-ions-china.git"
 else
-	SRC_URI="https://github.com/arenekosreal/plasma-ions-china/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
+	SRC_URI="
+		https://github.com/arenekosreal/plasma-ions-china/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
+		https://github.com/arenekosreal/plasma-ions-china/commit/1d5b55ed72c22822db5c8a482f29022457674a00.patch
+			-> ${PN}-kde-6.8.0.patch
+	"
 	KEYWORDS="~amd64"
 fi
 
@@ -28,6 +32,10 @@ BDEPEND="
 	sys-devel/gettext
 	kde-frameworks/extra-cmake-modules
 "
+
+PATCHES=(
+	"${DISTDIR}/${PN}-kde-6.8.0.patch"
+)
 
 src_configure() {
 	local mycmakeargs=( -DPLASMA_IONS_CHINA_USE_SYSTEM_HEADERS=ON )
