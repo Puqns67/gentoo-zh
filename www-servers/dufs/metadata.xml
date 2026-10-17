@@ -8,4 +8,7 @@
 	<upstream>
 		<remote-id type="github">sigoden/dufs</remote-id>
 	</upstream>
+	<use>
+		<flag name="tls">Build with tls support</flag>
+	</use>
 </pkgmetadata>
